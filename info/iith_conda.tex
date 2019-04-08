@@ -1,0 +1,390 @@
+% pdflatex GIseis_conda
+\documentclass[10pt,titlepage,fleqn]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage[round]{natbib}
+\usepackage{xspace}
+\usepackage{graphicx}
+%\usepackage{epsfig}
+
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+\usepackage{url}
+
+%=====================================================
+%       SPACING COMMANDS (Latex Companion, p. 52)
+%=====================================================
+
+\usepackage{setspace}
+
+\renewcommand{\baselinestretch}{1.1}
+
+\textwidth 460pt
+\textheight 700pt
+\oddsidemargin 0pt
+\evensidemargin 0pt
+
+% see Latex Companion, p. 85
+\voffset     -50pt
+\topmargin     0pt
+\headsep      20pt
+\headheight    0pt
+\footskip     30pt
+\hoffset       0pt
+
+\graphicspath{
+  {figures/}
+}
+
+\newcommand{\refSec}[1]{Section~\ref{#1}}
+\newcommand{\refTab}[1]{Table~\ref{#1}}
+%=====================================================
+\begin{document}
+%=====================================================
+
+\noindent
+{\bf Installing python and obspy via conda} \\
+\noindent Last compiled: \today \\
+\noindent Location of this file: \verb+GEOTOOLS/info/GIseis_conda.tex+ \\
+\noindent To make a pdf, type this: \verb+pdflatex GIseis_conda+
+
+%=====================================================
+\iffalse
+\begin{table}
+\hspace{-1cm}
+\caption[]
+{
+SLN environment versioning
+\label{tab:sln}
+}
+\begin{tabular}{|c|c|c|c|c|p{4cm}|}
+\hline
+sln & python & miniconda & obspy & last successful pysep commit & manuscripts \\
+\hline\hline
+sln   & 3.6.2 & 4.3.33 & 1.0.3 & 7491995 & \citet{Alvizuri2018} \\
+   &  &  &  & & \citet{Tape2018} \\
+   &  &  &  & & \citet{Silwal2018} \\ \hline
+sln01 & 3.6.5 & 4.5.1  & 1.1.0 & -- & -- \\
+\hline\hline
+\end{tabular}
+\end{table}
+\fi
+%=====================================================
+
+\section{Installing python and obspy via conda}
+\label{sec:python_obspy}
+
+Most of our software is installed via package managers with the click of a button. However, many package managers do not offer a wide range of software or the latest versions of existing software. To overcome this, we use a utility called conda to install software in a user's home directory (note: {\em not} on a machine or in a network-wide file space).
+
+%
+\begin{verbatim}
+[vipul@shavak ~]$ python --version
+Python 2.7.13 :: Continuum Analytics, Inc.
+\end{verbatim}
+%
+%-------------------------------------------------------------------
+Most users will want to use the latest version of obspy and the latest version of python. Here is how to install the latest version of obspy with python 3.6.
+%
+\begin{enumerate}
+\item Update the software on your computer:
+%
+\begin{verbatim}
+sudo yum update
+\end{verbatim}
+%
+(You may need to ask someone with root permission.)
+
+\item Make sure you have the latest versions of all repositories. Type \verb+git pull+ from inside the repositories in \verb+~/REPOSITORIES/+.
+
+\item If you already have an environment installed, then skip to Step~\ref{step:update} to update your existing environment.
+
+\item At the bottom of your \verb+.bashrc+ file, add these lines
+%
+%\begin{verbatim}
+%# to over-ride the PYTHONPATH settings from antelope startup
+%unset PYTHONPATH
+%# echo $1 will show wrong=0 (from the antelope startup script)
+%# this is a temp fix
+%set --
+\end{verbatim}
+
+% ADMIN needs to have downloaded the conda install file
+
+\item Install miniconda2:
+%
+\begin{verbatim}
+bash /usr/local/src/Miniconda2-latest-Linux-x86_64.sh
+source .bashrc
+\end{verbatim}
+%
+Answer the prompts. This will append your \verb+.bashrc+ file with the path to miniconda.
+
+This will install several packages, including a version of python.
+
+\label{step:conda_install_1}
+
+\item Install the conda client and check the conda version:
+%
+\begin{verbatim}
+conda install anaconda-client
+conda --version
+\end{verbatim}
+
+This will install the directory \verb+~/miniconda2+. This will take several minutes.
+
+\label{step:conda_install_2}
+
+\item Make sure you're in your home dir and that you are {\em not} inside the python shell.
+
+Create the \verb+sln+ environment with python:
+%
+% AT WHAT TIME WERE THESE INSTRUCTIONS VALID?
+%\begin{verbatim}
+%conda create --name sln python=3.6
+%source activate sln
+%conda install -c obspy obspy jupyter basemap
+%\end{verbatim}
+%
+\begin{verbatim}
+conda create --name sln python=3.6
+source activate sln
+python --version
+\end{verbatim}
+%
+\label{step:create_env}
+\item Install obspy and its dependencies:
+%
+\begin{verbatim}
+conda config --add channels conda-forge
+conda install obspy jupyter basemap
+\end{verbatim}
+% I DON'T THINK THE conda-forge COMMAND IS NEEDED.
+% Cole sees this message:
+% Warning: 'conda-forge' already in 'channels' list, moving to the top
+
+Answer the prompts. This will take several minutes.
+
+\label{step:install}
+
+\item OPTIONAL: If you want to always have python 3.6 and the latest obspy in your path, then add this line at the {\bf end} of your \verb+.bashrc+ file.
+%
+\begin{verbatim}
+# for obspy and python
+source activate sln
+\end{verbatim}
+
+\item Open a new terminal (type \verb+source activate sln+) and check that you see the latest versions of python and obspy:
+%
+\begin{verbatim}
+(sln) [vipul@shavak ~]$ python --version
+Python 3.6.8 :: Anaconda, Inc.
+(sln) [vipul@shavak ~]$ which python
+~/miniconda2/envs/sln/bin/python
+
+Python 3.6.8 |Anaconda, Inc.| (default, Dec 30 2018, 01:22:34) 
+[GCC 7.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import obspy; print(obspy.__version__)
+1.1.1
+>>> quit()
+\end{verbatim}
+
+\item Test out the default example in \verb+pysep+ (\verb+cd $PYSEP+):
+%
+\begin{verbatim}
+python run_getwaveform.py
+\end{verbatim}
+
+\item Miscellaneous packages.
+
+\begin{tabular}{ll}
+\verb+conda install tqdm+ & status bar showing progress \\
+\verb+conda install pyasdf+ & asdf data format \url{https://seismicdata.github.io/pyasdf/}
+\end{tabular}
+
+
+\item {\bf Updating the sln environment.}
+\label{step:update}
+
+A brute-force update can be achieved with the command \\
+\verb+conda update --all+ \\
+from inside the curret environment.
+
+Alternatively, to be safe, you can save the current environment:
+%
+\begin{itemize}
+\item If you are already in an environment, deactivate it: \\
+\verb+source deactivate+
+
+\item Update conda: \verb+conda update conda+
+
+Note: Not sure if this is the same result as executing Steps~\ref{step:conda_install_1}-\ref{step:conda_install_2}.
+
+\item Rename the environment:
+\begin{verbatim}
+conda create --name sln_old --clone sln
+\end{verbatim}
+
+This will redownload packages. There is a flag \verb+--offline+ to disable this option.
+
+\item Remove the original environment:
+\begin{verbatim}
+conda remove --name sln --all
+\end{verbatim}
+
+\item If you have this line in your .bashrc file
+
+\verb+source activate sln+
+
+it is probably best to comment it.
+
+\item Proceed with Step~\ref{step:create_env} to create a new \verb+sln+ environment.
+
+\end{itemize}
+
+NOTE: If you install anything else under the same environment it may cause clash of the dependencies. conda will upgrade (or downgrade) the dependencies to fulfill the requirements of the later installation. It is probably safest not to install anything else in \verb+sln+; instead, create a new environment.
+
+\end{enumerate}
+
+%-------------------------------
+
+\subsection{Optional testing}
+
+\begin{enumerate}
+\item Make sure you have activated the \verb+sln+ environment.
+
+\item Test out a set of examples in \verb+pysep+
+%
+\begin{verbatim}
+check_getwaveform.bash
+\end{verbatim}
+%
+This will take several minutes as waveforms are fetched from IRIS, then processed locally. The script will compare the lists of output files with a set of pre-saved lists of output files.
+
+\item Test out a LLNL example in \verb+pysep+
+%
+\begin{itemize}
+\item Install pandas:
+%
+\begin{verbatim}
+conda install pandas
+\end{verbatim}
+
+\item Get the LLNL databse client and install it.
+%
+\begin{verbatim}
+cd $REPOS
+git clone https://GITHUBUSERNAME@github.com/krischer/llnl_db_client.git
+cd llnl_db_client
+pip install -v -e .
+\end{verbatim}
+
+\item Edit \verb+check_getwaveform.bash+ to run the HOYA example only.
+
+\end{itemize}
+
+\iffalse
+\item Install \verb+wfdiff+ (\url{http://krischer.github.io/wfdiff/}).
+
+Since many dependencies are already installed, you just need these additional ones:
+%
+\begin{verbatim}
+conda install pandas pytest nose
+conda install mpi4py basemap-data-hires
+\end{verbatim}
+%
+%conda install flake8=2.3
+%
+%(sln) [crichards@otter wfdiff_uaf]$ conda install flake8=2.3
+%Fetching package metadata ...........
+%Solving package specifications: .
+%
+%UnsatisfiableError: The following specifications were found to be in conflict:
+%  - flake8 2.3* -> mccabe 0.3 -> python 3.5* -> xz 5.0.5
+%  - python 3.6*
+%Use "conda info <package>" to see the dependencies for each package.
+%
+%
+%
+Download and install wfdiff:
+%
+%git clone https://github.com/krischer/wfdiff.git
+\begin{verbatim}
+mkdir ~/REPOSITORIES/ADJOINT_TOMO
+cd ~/REPOSITORIES/ADJOINT_TOMO/
+git clone https://github.com/vsilwal/wfdiff.git wfdiff_uaf
+cd wfdiff_uaf
+pip install -v -e .
+\end{verbatim}
+
+\item test \verb+wfdiff+ in serial
+%
+\begin{verbatim}
+python run_wfdiff_test.py
+\end{verbatim}
+%
+and in parallel
+%
+\begin{verbatim}
+mpirun -n 8 python run_wfdiff_test.py
+\end{verbatim}
+
+\fi
+
+\end{enumerate}
+
+%-------------------------------
+\iffalse
+\subsection{Installation on chinook cluster}
+\label{sec:conda_chinook}
+
+CURRENTLY NOT NEEDED (MIGRATE DATA FILES TO CLUSTER FOR pyflex, pyadjoint, etc)
+
+\begin{enumerate}
+
+\item Install miniconda2
+\begin{verbatim}
+bash /import/c1/ERTHQUAK/ERTHQUAK/vsilwal/seismolab/Miniconda2-latest-Linux-x86_64.sh
+\end{verbatim}
+
+\item Install conda:
+Same as Step~\ref{step:conda_install_2} (of Section~\ref{sec:python_obspy}).
+
+\item Make sure you're in your home dir and that you are {\em not} inside the python shell.
+
+Create the \verb+sln+ environment with python:
+
+% conda create --name sln python=3.6
+% Don't know why python=3.6 did not worked
+\begin{verbatim}
+conda create --name sln python=3.5
+source activate sln
+python --version
+\end{verbatim}
+
+Answer the prompts. This will take several minutes.
+
+\item Install obspy and its dependencies:
+Proceed with Step~\ref{step:install} (of Section~\ref{sec:python_obspy}).
+
+\end{enumerate}
+
+\fi
+
+%Probably we want the same environment for pysep, wfdiff, and instaseis.
+
+%=====================================================
+% REFERENCES
+
+\begin{spacing}{1.0}
+\bibliographystyle{agu08}
+%\bibliography{preamble,REFERENCES,refs_carl,refs_socal,refs_source}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_calif,carl_him,carl_imaging,carl_alaska}
+\end{spacing}
+
+%=====================================================
+\end{document}
+%=====================================================
