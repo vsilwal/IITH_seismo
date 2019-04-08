@@ -9,7 +9,7 @@ This repository contains utilities that could be of use for other members of the
 (like: meshing, data processing, plotting, etc). 
 Most packages start like this until they are ready to be shared publicly or become an independent repository of its own.
 
-For now its contains two repositories:
+For now it contains two repositories:
 matlab_util - For matlab functions 
 python_util - For python functions
 Similarly you can add perl, C, etc as you feel the need.
