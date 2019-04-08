@@ -67,14 +67,14 @@ for ii=1:length(datacenter)
     % Plotting
     figure
     hold on
-    plot(lon_sub,lat_sub,'v')
+    plot(lon_sub,lat_sub,'v'); box on
     title(sprintf('Datacenter: %s; Time Range: %s - %s',dc, datestr(time_range(1)),datestr(time_range(2),1)));
     
     % Print
-    for jj = 1:length(indx)
-       disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
-           stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
-    end
+%     for jj = 1:length(indx)
+%        disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
+%            stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
+%     end
 end
     
 %%
@@ -84,11 +84,20 @@ if 0
     % Get ALL Stations
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations;
     
+    %==========================================================
     % Get ALL stations within certain lat-lon region
     clear all
+    %----------------------------------------------------------
     ax0 = [60 100 20 45];
-    time_range = [datenum('2000-01-01') datenum('2010-01-01')];
+    time_range = [datenum('2000-01-01') datenum('2020-01-01')];
+    %----------------------------------------------------------
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations(ax0,time_range);
+    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[]);
+    hold on    
+    plot(lon,lat,'o','MarkerSize',7,'MarkerEdgeColor','black','MarkerFaceColor',[1 .6 .6]);
+    plot(lon_sub,lat_sub,'vb')
+    xlabel('Lon'); ylabel('Lat');
+    %==========================================================
     
     % Get stations from a specfic Datacenter for ALL time-period
     clear all
