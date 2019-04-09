@@ -2,9 +2,11 @@
 
 This is a private repository for the members of IITH-SeismicSource Group. 
 It can be downloaded using the following command at the terminal:
+
 ```
 git clone https://github.com/vsilwal/IITH_seismo
 ```
+
 Let me know if there is any permission issue..
 
 This repository contains utilities that could be of use for other members of the group 
