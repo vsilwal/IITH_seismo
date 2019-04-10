@@ -89,9 +89,11 @@ if 0
     clear all
     %----------------------------------------------------------
     ax0 = [60 100 20 45];
-    time_range = [datenum('2000-01-01') datenum('2020-01-01')];
+    time_range = [datenum('2010-01-01') datenum('2018-01-01')];
     %----------------------------------------------------------
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations(ax0,time_range);
+    plot_borders(ax0); axis tight; axis equal
+    % Get earthquakes
     [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[]);
     hold on    
     plot(lon,lat,'o','MarkerSize',7,'MarkerEdgeColor','black','MarkerFaceColor',[1 .6 .6]);
