@@ -52,6 +52,7 @@ for ii=1:length(datacenter)
     
     whos
     % Now subset by time
+    datestr(time_range);
     indx=find(or(or(and(time_range(1) < starttime_sub,time_range(2) > starttime_sub),...
         and(time_range(1) > starttime_sub,time_range(2) < endtime_sub)),...
         and(time_range(1) < endtime_sub,time_range(2) > endtime_sub)));
@@ -59,8 +60,8 @@ for ii=1:length(datacenter)
     
     netwk_sub = netwk_sub(indx);
     stnm_sub = stnm_sub(indx);
-    starttime_sub = start_time(indx);
-    endtime_sub = end_time(indx);
+    starttime_sub = starttime_sub(indx);
+    endtime_sub = endtime_sub(indx);
     lon_sub = lon_sub(indx);
     lat_sub = lat_sub(indx);
     
@@ -71,10 +72,10 @@ for ii=1:length(datacenter)
     title(sprintf('Datacenter: %s; Time Range: %s - %s',dc, datestr(time_range(1)),datestr(time_range(2),1)));
     
     % Print
-%     for jj = 1:length(indx)
-%        disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
-%            stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
-%     end
+    for jj = 1:length(indx)
+       disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
+           stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
+    end
 end
     
 %%
