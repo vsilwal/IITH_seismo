@@ -1,4 +1,4 @@
-
+%%%%%%%%%%%%%  converting lat, long (in degrees) into cartesian_coords (in m) %%%%%%%%%%%%%%%
 lat=(27.5:0.01:27.8);
 long=(85.2:0.01:85.6);
 Elpse=referenceEllipsoid('earth');
