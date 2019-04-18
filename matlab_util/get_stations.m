@@ -68,7 +68,7 @@ for ii=1:length(datacenter)
     % Plotting
     figure
     hold on
-    plot(lon_sub,lat_sub,'v'); box on
+    plot(lon_sub,lat_sub,'v'); box on; grid on
     title(sprintf('Datacenter: %s; Time Range: %s - %s',dc, datestr(time_range(1)),datestr(time_range(2),1)));
     
     % Print
@@ -89,13 +89,17 @@ if 0
     % Get ALL stations within certain lat-lon region
     clear all
     %----------------------------------------------------------
-    ax0 = [60 100 20 45];
-    time_range = [datenum('2010-01-01') datenum('2018-01-01')];
+    %ax0 = [60 100 20 45];
+    ax0 = [75 85 25 35]; 
+    time_range = [datenum('2009-01-01') datenum('2011-01-01')];
+    %ax0 = [80 90 25 30];
+    %time_range = [datenum('2015-01-01') datenum('2016-01-01')];
     %----------------------------------------------------------
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations(ax0,time_range);
     plot_borders(ax0); axis tight; axis equal
     % Get earthquakes
-    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[]);
+    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[4 10]);
+    display_eq_list([],otime,lon,lat,dep,Mw);
     hold on    
     plot(lon,lat,'o','MarkerSize',7,'MarkerEdgeColor','black','MarkerFaceColor',[1 .6 .6]);
     plot(lon_sub,lat_sub,'vb')

@@ -53,5 +53,13 @@ if 0
     title('India (ETOPO1: resolution 1.8 km)');
     save('/home/vipul/dlib/topography/india/etopo1_him','Xlon','Ylat','Zt','nx','ny','d');
     
-    
+    % Alaska
+    ax0 = [200 235 50 75];
+    cax = [0 6000];
+    [Xlon,Ylat,Zt,nx,ny,d] = get_etopo(ax0);
+    figure; pcolor(Xlon,Ylat,Zt); shading flat;
+    xlabel('Longitude'); ylabel('Latitude');
+    axis equal, axis(ax0), caxis(cax); colorbar
+    title('India (ETOPO1: resolution 1.8 km)');
+    save('/home/vipul/dlib/topography/alaska/etopo1_ak','Xlon','Ylat','Zt','nx','ny','d');
 end

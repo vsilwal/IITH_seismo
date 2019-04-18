@@ -19,8 +19,8 @@ if nargin==0
     bfigure = false;    
 end
 
-load('/home/vipul/dlib/topography/india/etopo1_india');
-%load('/home/vipul/dlib/topography/india/etopo1_him')
+%load('/home/vipul/dlib/topography/india/etopo1_india');
+load('/home/vipul/dlib/topography/india/etopo1_him')
 whos
 
 if ismooth > 0
@@ -35,7 +35,7 @@ if ismooth > 0
         case 1      % smooth the entire model
             disp('SMOOTH ENTIRE MODEL');
             axtar1 = [min(Xlon(:)) max(Xlon(:)) min(Ylat(:)) max(Ylat(:))];
-            NPTG = 4;
+            NPTG = 8;
             zt = smooth_box(x,y,zt,axtar1,NPTG,smoothfig);
         case 2
             disp('NO SMOOTHING OF SPECIFIC REGIONS IS IMPLEMENTED');

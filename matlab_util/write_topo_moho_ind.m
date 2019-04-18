@@ -94,8 +94,8 @@ if 0==1
     %% bounds for alaska meshes
     % note: it is best to check this on a NON-SQUARE dimension
     clear, clc, close all
-    ismooth = 0;
-    ipick = 4;
+    ismooth = 1;
+    ipick = 2;
     switch ipick
         case 1
             % Garhwal-Kumaon (Western Himalayas)
@@ -172,6 +172,9 @@ if 0==1
     % this command WILL write the file, since odir is provided
     %odir = '/home/vipul/dlib/topography/india/xyz';
     %[X,Y,Ztopo,Zmoho,nx,ny] = write_topo_moho_ind(xmin,ymin,xran,yran,dx,szone,ismooth,odir,ftag);
+    % 
+    % To extract only z column from this file use:
+    % awk '{print $3}' ftag_topo.xyz > ftag_z.z
     
     %% this is a crude approach -- it is better to fine-tune the boundaries
     % by examining the GMT plots
