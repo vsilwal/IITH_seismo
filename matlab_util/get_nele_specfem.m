@@ -6,11 +6,12 @@ function [zele,dz,zdoublingele] = get_nele_specfem(dx, zmax,zlayers,zdoubling)
 % zdoubling     depth from surface to each doubling layer (=[] if no doubling layer)
 %               It is suggested to put doubling at the interfaces
 %
-% zmax, zlayers and zdoubling should be in negative
+% zmax, zlayers and zdoubling should be in negative with top surface as 0
 %
 % OUTPUT
-% zele          Number of elements in each layer
-% zdoublingele  Element number from bottom at which we want doubling
+% zele          number of elements in each layer
+% dz            thickness of elements in each layer
+% zdoublingele  number from bottom to the doubling element
 
 % If there is doubling layer below the last layer interface
 if and(and(~isempty(zlayers),~isempty(zdoubling)),zdoubling(end)<zlayers(end))
@@ -33,11 +34,11 @@ else
     zdoubling = [zdoubling zlayers(end)];
 end
 
-N = length(zlayers)-1;
+Nlayers = length(zlayers)-1;
 
 % Find which layers will have approx what size
 count = 1;
-for ii=1:N
+for ii=1:Nlayers
     if zlayers(ii) <= zdoubling(count)    
         count = count + 1;
     end
@@ -48,14 +49,15 @@ for ii=1:N
     zlayers_mesh(ii) = zele(ii) * dz(ii);
 end
 
+
 % count number of elements from bottom of the mesh to the douling layer 
 zdoublingele=[];
 zcompare = dz(end);
 zele_flip=cumsum(flip(zele));
-for ii=1:N
-    if dz(N-ii+1) < zcompare
+for ii=1:Nlayers
+    if dz(Nlayers-ii+1) < zcompare
         zdoublingele = [zdoublingele zele_flip(ii-1)];
-        zcompare = dz(N-ii+1);
+        zcompare = dz(Nlayers-ii+1);
     end
 end
 
@@ -66,22 +68,21 @@ zdoublingele
 disp('---------------------------------------------------')
 disp(sprintf('thickness(m) \t Nele \t element_size \t thickness(mesh)'));
 disp('---------------------------------------------------')
-for ii=1:N
+for ii=1:Nlayers
     disp(sprintf('%0.2f \t %0.0f \t %0.1f \t %0.1f',zthick(ii), zele(ii), dz(ii), zlayers_mesh(ii)));
 end
 disp('---------------------------------------------------')
 disp(sprintf('%0.1f \t %0.0f \t N/A \t\t %0.1f',sum(zthick),sum(zele),sum(zlayers_mesh)))
 
 
-
 %%
 % EXAMPLES
 if 0
     % scak
-    dx = 1e3;
+    dx = 500/384*1e3;
     zmax = -300*1e3; 
     zlayers = [0 -4 -9 -14 -19 -24 -33 -49 -66]*1e3;
-    zdoubling = [-9 -66]*1e3;
+    zdoubling = [-9 -49]*1e3;
 
     [zele,dz,zdoublingele]= get_nele_specfem(dx, zmax,zlayers,zdoubling);
     
@@ -105,7 +106,7 @@ if 0
     
     %----------------------------
     % tactmod
-    dx = 1e3;
+    dx = 500/360*1e3;
     zmax = -300*1e3; 
     zlayers =  [0 -3 -11 -24 -31 -76]*1e3
     zdoubling = [-11 -76]*1e3;
@@ -114,10 +115,10 @@ if 0
     
     %----------------------------
     % himalayas
-    x = 1e3;
-    zmax = -200*1e3; 
+    dx = 500/360*1e3;
+    zmax = -150*1e3; 
     zlayers =  [0 -4 -16 -20 -27 -37 -42 -56]*1e3;
-    zdoubling = [-10 -56 -100]*1e3;
+    zdoubling = [-10 -56]*1e3;
 
     [zele,dz,zdoublingele]= get_nele_specfem(dx, zmax,zlayers,zdoubling);
 end

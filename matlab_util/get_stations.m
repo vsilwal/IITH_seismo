@@ -76,6 +76,11 @@ for ii=1:length(datacenter)
        disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
            stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
     end
+    
+    for jj = 1:length(indx)
+       disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',stnm_sub{jj},...
+           netwk_sub{jj},lat_sub(jj),lon_sub(jj),'0','0'));
+    end
 end
     
 %%
@@ -90,20 +95,28 @@ if 0
     clear all
     %----------------------------------------------------------
     %ax0 = [60 100 20 45];
-    ax0 = [75 85 25 35]; 
-    time_range = [datenum('2009-01-01') datenum('2011-01-01')];
-    %ax0 = [80 90 25 30];
-    %time_range = [datenum('2015-01-01') datenum('2016-01-01')];
+    ax0 = [77 83 29 33]; 
+    time_range = [datenum('2010-06-21') datenum('2010-07-07')];
     %----------------------------------------------------------
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations(ax0,time_range);
-    plot_borders(ax0); axis tight; axis equal
+    plot_borders(ax0);  axis(ax0); axis equal
+    axis(ax0)
+    %----------------------------------------------------------
     % Get earthquakes
-    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[4 10]);
+    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[0 10]);
     display_eq_list([],otime,lon,lat,dep,Mw);
     hold on    
     plot(lon,lat,'o','MarkerSize',7,'MarkerEdgeColor','black','MarkerFaceColor',[1 .6 .6]);
     plot(lon_sub,lat_sub,'vb')
     xlabel('Lon'); ylabel('Lat');
+    % Get CMT Solutions
+    [otimeCMT,tshift,hdur,latCMT,lonCMT,depCMT,M,M0,MwCMT,eid,elabel,...
+        str1,dip1,rk1,str2,dip2,rk2,lams,pl1,az1,pl2,az2,pl3,az3,...
+        icmt,dataused,itri,M0gcmt,Mb,Ms] = readCMT(time_range,[ax0 0 200],[4 10]);
+    plot(lonCMT,latCMT,'p','MarkerSize',13,'MarkerEdgeColor','black','MarkerFaceColor',[1 0 0])
+    display_eq_list([],otimeCMT,lonCMT,latCMT,depCMT,MwCMT);
+    % save as pdf
+    %print('stations_event','-dpdf','-fillpage')
     %==========================================================
     
     % Get stations from a specfic Datacenter for ALL time-period

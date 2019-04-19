@@ -95,7 +95,7 @@ if 0==1
     % note: it is best to check this on a NON-SQUARE dimension
     clear, clc, close all
     ismooth = 1;
-    ipick = 2;
+    ipick = 5;
     switch ipick
         case 1
             % Garhwal-Kumaon (Western Himalayas)
@@ -121,6 +121,13 @@ if 0==1
             lonmin=72; latmin=10; % NOT SET YET
             szone = '43P';
             xran = 900*1e3; yran = 500*1e3;
+        case 5
+            % GK-Nepal
+            ftag = 'gk_nepal';
+            lonmin=78; latmin=29; % NOT SET YET
+            szone = '44R';
+            xran = 500*1e3; yran = 400*1e3;  
+            % ax = [ 207728.9 707728.9 3211697.4 3611697.4 ]
     end
     % get UTM for the lower left (SW) point
     [xmin,ymin] = utm2ll(lonmin,latmin,szone,0);
@@ -153,6 +160,7 @@ if 0==1
     dx = 1*1e3;
     % this command will NOT write the file, since odir is not provided
     [X,Y,Ztopo,Zmoho,nx,ny] = write_topo_moho_ind(xmin,ymin,xran,yran,dx,szone,ismooth);
+    figure; pcolor(X,Y,Ztopo); shading flat;
 
     % display bounds for GEOCUBIT configuration file
     disp(sprintf('xmin = %.1f\nxmax = %.1f\nymin = %.1f\nymax = %.1f',...

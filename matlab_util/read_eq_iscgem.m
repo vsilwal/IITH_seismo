@@ -19,9 +19,8 @@ function [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(arg1,ax3,Mwran)
 %
 
 ddir = '/home/vipul/dlib/seismicity/globe/isc-gem/';
-odir = './';
 %ddir = '/home/carltape/dwrite/iscgem/';     % temporary
-%odir = ddir;                                % temporary
+odir = ddir;                                % temporary
 ofile = [odir 'isc-gem.mat'];
 ifile = [ddir 'isc-gem-cat.csv'];
 
