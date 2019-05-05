@@ -10,18 +10,28 @@ shpfilename = 'xfaults.shp';
 
 data = shaperead(strcat(ddir,shpfilename));
 
+x = [];
+y = [];
+
 ifigure = 1;
+
+for ii=1:length(data)
+    x = [x data(ii).X];
+    y = [y data(ii).Y];
+    %plot(x,y,'LineWidth',2)
+end
+
 if ifigure
     figure
     hold on
-    
-    for ii=1:length(data)
-        x = data(ii).X;
-        y = data(ii).Y;
-        plot(x,y)
-    end
+    plot(x,y,'r','LineWidth',1)
+    plot_borders(axis);
+        title('Active Faults in India, Dasgupta 2000')
 end
 
-save(strcat(ddir,'GIS2000'),'data')
+% Save as mat file
+%save(strcat(ddir,'GIS2000_complete'),'data')
+%save(strcat(ddir,'GIS2000'),'x','y')
 
+% save pdf plot
 print('faults_GIS2000','-dpdf','-fillpage')
