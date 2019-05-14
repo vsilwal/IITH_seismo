@@ -15,7 +15,7 @@ function [zele,dz,zdoublingele] = get_nele_specfem(dx, zmax,zlayers,zdoubling)
 
 % If there is doubling layer below the last layer interface
 if and(and(~isempty(zlayers),~isempty(zdoubling)),zdoubling(end)<zlayers(end))
-    indx = find(zdoubling<zlayers(end));
+    indx = find(zdoubling < zlayers(end));
     zlayers = [zlayers zdoubling(indx)];
 end
     
@@ -39,7 +39,7 @@ Nlayers = length(zlayers)-1;
 % Find which layers will have approx what size
 count = 1;
 for ii=1:Nlayers
-    if zlayers(ii) <= zdoubling(count)    
+    if zlayers(ii) <= zdoubling(count)
         count = count + 1;
     end
     
@@ -75,15 +75,21 @@ disp('---------------------------------------------------')
 disp(sprintf('%0.1f \t %0.0f \t N/A \t\t %0.1f',sum(zthick),sum(zele),sum(zlayers_mesh)))
 
 
+% Add plot
+figure
+
+plot
+
+
 %%
 % EXAMPLES
 if 0
     % scak
-    dx = 500/384*1e3;
+    dx = 500/320*1e3;
     zmax = -300*1e3; 
     zlayers = [0 -4 -9 -14 -19 -24 -33 -49 -66]*1e3;
-    zdoubling = [-9 -49]*1e3;
-
+    zdoubling = [-9 -49 -120 -200]*1e3;
+    zdoubling = [-9 -49];
     [zele,dz,zdoublingele]= get_nele_specfem(dx, zmax,zlayers,zdoubling);
     
     %----------------------------

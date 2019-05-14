@@ -72,15 +72,13 @@ for ii=1:length(datacenter)
     title(sprintf('Datacenter: %s; Time Range: %s - %s',dc, datestr(time_range(1)),datestr(time_range(2),1)));
     
     % Print
-    for jj = 1:length(indx)
-       disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
-           stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
+    if 0
+        for jj = 1:length(indx)
+            disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',netwk_sub{jj},...
+                stnm_sub{jj},lon_sub(jj),lat_sub(jj),datestr(starttime_sub(jj),1),datestr(endtime_sub(jj),1)));
+        end
     end
     
-    for jj = 1:length(indx)
-       disp(sprintf('%s \t %s \t %.2f \t %.2f \t %s \t %s',stnm_sub{jj},...
-           netwk_sub{jj},lat_sub(jj),lon_sub(jj),'0','0'));
-    end
 end
     
 %%
@@ -101,9 +99,10 @@ if 0
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations(ax0,time_range);
     plot_borders(ax0);  axis(ax0); axis equal
     axis(ax0)
+    wrtie_vtk_xyz('stations',lon_sub,lat_sub,ones(1,length(lat_sub)))
     %----------------------------------------------------------
     % Get earthquakes
-    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[0 10]);
+    [otime,lon,lat,dep,Mw,eid,depunc] = read_eq_iscgem(time_range,[ax0 0 200],[3 10]);
     display_eq_list([],otime,lon,lat,dep,Mw);
     hold on    
     plot(lon,lat,'o','MarkerSize',7,'MarkerEdgeColor','black','MarkerFaceColor',[1 .6 .6]);
@@ -135,4 +134,23 @@ if 0
     time_range = [datenum('2000-01-01') datenum('2010-01-01')];
     datacenter = {'IRISDMC'};
     [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] =get_stations(ax0,time_range,datacenter);
+    %==========================================================
+    %
+    clear all
+    close all
+    
+    %----------------------------------------------------------
+    ax0 = [55 105 5 45]; % Indian subcontinent
+    time_range = [datenum('1990-01-01') datenum('2019-01-01')];
+    %----------------------------------------------------------
+    [indx,lon_sub,lat_sub,netwk_sub,stnm_sub,starttime_sub,endtime_sub] = get_stations(ax0,time_range);
+    plot_borders(ax0);  axis(ax0); axis equal
+    axis(ax0)
+    
+    figure
+    scatter(lon_sub,lat_sub,20,starttime_sub,'v')
+    colormap(lines(7))
+    h = colorbar;
+    datetick(h,'y');
+
 end

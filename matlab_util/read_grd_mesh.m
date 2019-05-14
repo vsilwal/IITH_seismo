@@ -25,7 +25,7 @@ if ~exist(grdfile,'file')
     disp(grdfile);
     error('file does not exist');
 end
-grdfile = '/home/vipul/dlib/topography/GLOBAL/ETOPO1/ETOPO1_Ice_g.grd';
+%grdfile = '/home/vipul/dlib/topography/GLOBAL/ETOPO1/ETOPO1_Ice_g.grd';
 [x,y,Z,d] = grdread2(grdfile);
 whos x y Z d
 nx = length(x);
