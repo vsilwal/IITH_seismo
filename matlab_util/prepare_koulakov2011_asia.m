@@ -1,11 +1,7 @@
-%function [] = read_koulakov2011_asia
 %  Read P and S wave anomalies from Koulakov 2011
 close all
 clear all
 ddir = '/home/vipul/dlib/TOMO/koulakov/DATA/ASIA_ALL/';
-imodel = 1;
-zrange = [50 50]*1e3;
-iplot_anomaly = 1;
 
 % Read model
 dvp_fname = 'MOD_3D_1.dat'; % P wave anomalies
@@ -44,9 +40,6 @@ yvec = [10:0.15:60]';  % 334 (latitude)
 dz = 20*1e3; % in meters
 zvec = [10:20:900]*1e3';   % 45 (depth)
 
-%zvec_subset = zvec(find(and(zvec>=zrange(1),zvec<=zrange(2))));
-iz = nearest(zrange/dz);
-
 [nx,ny] = size(X);
 Nz = nx*ny; % number of element in one depth cross-section
 xx = reshape(X',[Nz,1]);
@@ -84,7 +77,6 @@ for imodel = 1:2
         % XXX get interpolated value
         [val,idx] = min(abs(z1-zvec(ii)/1e3)); % XXX getting the nearest value from ak135
         
-        imodel = 2;
         v0 = V1(idx);
         % actual value
         V = [V; v0*(1 + dV_dep/100)];
@@ -94,8 +86,7 @@ for imodel = 1:2
         Vp = V;
     elseif imodel==2
         Vs = V;
-    end
-    
+    end   
 end
 
 % save as mat file
