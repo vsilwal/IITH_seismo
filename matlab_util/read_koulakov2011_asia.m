@@ -17,21 +17,21 @@ if 0
     ax0 = [60 100 30 50];
     [x,y,z,Vp,Vs,dVp,dVs] = read_koulakov2011_asia(ax0);
     
-    zrange = [50 50]*1e3;
+    zrange = [30 50]*1e3;
     iz = nearest(zrange/20000);
     
-    dV = dVp; V = Vp; stag = 'P wave';
-    %dV = dVs; V = Vs; stag = 'S wave';
+    %dV = dVp; V0 = Vp; stag = 'P wave';
+    dV = dVs; V0 = Vs; stag = 'S wave';
     
-    Nz = length(x)/45; % because there are 45 layers in the model
+    Nz = length(x)/length(unique(z)); % Number of elements in each layer
     
     % Actual Koulakov data contians vp, vs percent anomalies
     % Reference model is ak135
-    for ii = iz(1):iz(2)
+    for ii = iz(1):iz(end)
         last = ii*Nz;
         first = last - Nz +1;
         dV_dep = dV(first:last);
-        V = dV(first:last);
+        V = V0(first:last);
         
         figure
         subplot(2,1,1)

@@ -98,21 +98,21 @@ if 0
     ddir = '/home/vipul/dlib/TOMO/koulakov/DATA/ASIA_ALL/';
     load(strcat(ddir,'koulakov2011'));
     
-    zrange = [50 50]*1e3;
+    zrange = [10:20:50]*1e3;
     iz = nearest(zrange/20000);
     
-    dV = dVp; V = Vp; stag = 'P wave';
-    %dV = dVs; V = Vs; stag = 'S wave';
+    dV = dVp; V0 = Vp; stag = 'P wave';
+    %dV = dVs; V0 = Vs; stag = 'S wave';
     
-    Nz = 234134; % This will depedn on ax (specify in read_koulakov2011_asia.m)
+    Nz = length(unique(x))*length(unique(y)); % This will depend on ax (specify in read_koulakov2011_asia.m)
     
     % Actual Koulakov data contians vp, vs percent anomalies
     % Reference model is ak135
-    for ii = iz(1):iz(2)
+    for ii = iz(1):iz(end)
         last = ii*Nz;
         first = last - Nz +1;
         dV_dep = dV(first:last);
-        V = dV(first:last);
+        V = V0(first:last);
         
         figure
         subplot(2,1,1)
