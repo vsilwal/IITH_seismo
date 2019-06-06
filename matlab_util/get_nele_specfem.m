@@ -14,11 +14,13 @@ function [zele,dz,zdoublingele] = get_nele_specfem(dx, zmax,zlayers,zdoubling)
 % zdoublingele  number from bottom to the doubling element
 
 % If there is doubling layer below the last layer interface
-if and(and(~isempty(zlayers),~isempty(zdoubling)),zdoubling(end)<zlayers(end))
-    indx = find(zdoubling < zlayers(end));
-    zlayers = [zlayers zdoubling(indx)];
+if and(~isempty(zlayers),~isempty(zdoubling))
+    if zdoubling(end)<zlayers(end)
+        indx = find(zdoubling < zlayers(end));
+        zlayers = [zlayers zdoubling(indx)];
+    end
 end
-    
+
 % If homogeneous put 2 interfaces - top and bottom
 % Make bottom of mesh as last interface
 if isempty(zlayers)
@@ -76,9 +78,7 @@ disp(sprintf('%0.1f \t %0.0f \t N/A \t\t %0.1f',sum(zthick),sum(zele),sum(zlayer
 
 
 % Add plot
-figure
-
-plot
+%figure
 
 
 %%
@@ -120,11 +120,20 @@ if 0
     [zele,dz,zdoublingele]= get_nele_specfem(dx, zmax,zlayers,zdoubling);
     
     %----------------------------
-    % himalayas
+    % himalayas (Mahesh et al., 2011)
     dx = 500/360*1e3;
     zmax = -150*1e3; 
     zlayers =  [0 -4 -16 -20 -27 -37 -42 -56]*1e3;
     zdoubling = [-10 -56]*1e3;
+    [zele,dz,zdoublingele]= get_nele_specfem(dx, zmax,zlayers,zdoubling);
+    
+    %----------------------------
+    % AK135
+    dx = 900/900*1e3;
+    zmax = -300*1e3; 
+    zlayers =  [0 -3 -6 -9 -13 -23 -33 -51 -67 -112 -192 -272]*1e3;
+    zdoubling = [-10 -45 -100]*1e3;
 
     [zele,dz,zdoublingele]= get_nele_specfem(dx, zmax,zlayers,zdoubling);
 end
+

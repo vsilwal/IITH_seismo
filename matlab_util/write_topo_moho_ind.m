@@ -94,8 +94,8 @@ if 0==1
     %% bounds for alaska meshes
     % note: it is best to check this on a NON-SQUARE dimension
     clear, clc, close all
-    ismooth = 1;
-    ipick = 5;
+    ismooth = 0;
+    ipick = 6;
     switch ipick
         case 1
             % Garhwal-Kumaon (Western Himalayas)
@@ -104,7 +104,7 @@ if 0==1
             szone = '44R';
             xran = 500*1e3; yran = 400*1e3;
         case 2
-            % Central Himalayas
+            % Nepal
             ftag = 'nepal';
             lonmin=82; latmin=26; 
             szone = '45R'; 
@@ -112,11 +112,11 @@ if 0==1
         case 3
             % Eastern Himalayas
             ftag = 'bhutan';
-            lonmin=-156.1; latmin=59; % NOT SET YET
+            lonmin= 88; latmin=26; % NOT SET YET
             szone = '46R';
             xran = 400*1e3; yran = 500*1e3;
         case 4
-            % Eastern Himalayas
+            % Deccans
             ftag = 'deccan';
             lonmin=72; latmin=10; % NOT SET YET
             szone = '43P';
@@ -128,6 +128,21 @@ if 0==1
             szone = '44R';
             xran = 500*1e3; yran = 400*1e3;  
             % ax = [ 207728.9 707728.9 3211697.4 3611697.4 ]
+        case 6
+            % Central Himalayas
+            ftag = 'chim';
+            lonmin=80; latmin=25; 
+            szone = '45R'; 
+            xran = 900*1e3; yran = 800*1e3;
+            % axx = [-207506.5   692493.5   2783273.9   3583273.9]
+        case 7
+            % Caucasus
+            ftag = 'cauc';
+            lonmin=39; latmin=38; 
+            szone = '38T'; 
+            xran = 900*1e3; yran = 800*1e3;   
+            odir = '/home/vipul/dlib/topography/russia/xyz';
+            % axx = [-27018.2   872981.8   4222839.1   5022839.1]
     end
     % get UTM for the lower left (SW) point
     [xmin,ymin] = utm2ll(lonmin,latmin,szone,0);
@@ -200,4 +215,9 @@ if 0==1
     %plot(axxll([1 2 2 1 1]),axxll([3 3 4 4 3]),'c','linewidth',2);
     plot(xboxll,yboxll,'g','linewidth',2);
     
+    %%
+    % Get stations in grid fromat
+    [rx,ry,rnm,rdist,raz,nx,ny] = get_station_syn_grid(axx,[],[],30*1e3,20*1e3);
+    filename = ['/home/vipul/dlib/stations/synthetic/' ftag '_' szone '_' num2str(length(unique(rx))) num2str(length(unique(ry)))];
+    write_station(filename,rx,ry);
 end   

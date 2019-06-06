@@ -31,4 +31,11 @@ if 0==1
         grid on;
         if kk==1, ylim([0 6371]); else axis([-0.5 9 -5 45]); end
     end
+
+    %-----------------------------------
+    % Save file for CAP
+    [z,rho,vp,vs,qkappa,qmu] = read_1D_ak135;
+    
+    
 end
+

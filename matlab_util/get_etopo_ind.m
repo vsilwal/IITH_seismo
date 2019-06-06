@@ -19,8 +19,10 @@ if nargin==0
     bfigure = false;    
 end
 
-load('/home/vipul/dlib/topography/india/etopo1_india');
-%load('/home/vipul/dlib/topography/india/etopo1_him')
+%load('/home/vipul/dlib/topography/india/etopo1_india');
+load('/home/vipul/dlib/topography/india/etopo1_him')
+%load('/home/vipul/dlib/topography/russia/etopo1_caucasus.mat')
+
 whos
 
 if ismooth > 0

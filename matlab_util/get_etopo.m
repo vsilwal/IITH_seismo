@@ -41,7 +41,8 @@ if 0
     xlabel('Longitude'); ylabel('Latitude');
     axis equal, axis(ax0), caxis(cax); colorbar
     title('India (ETOPO1: resolution 1.8 km)');
-    save('/home/vipul/dlib/topography/india/etopo1_india','Xlon','Ylat','Zt','nx','ny','d');
+    hold on; plot_borders(ax0);
+    %save('/home/vipul/dlib/topography/india/etopo1_india','Xlon','Ylat','Zt','nx','ny','d');
     
     % Himalayas
     ax0 = [75 95 25 35];
@@ -50,8 +51,9 @@ if 0
     figure; pcolor(Xlon,Ylat,Zt); shading flat;
     xlabel('Longitude'); ylabel('Latitude');
     axis equal, axis(ax0), caxis(cax); colorbar
-    title('India (ETOPO1: resolution 1.8 km)');
-    save('/home/vipul/dlib/topography/india/etopo1_him','Xlon','Ylat','Zt','nx','ny','d');
+    title('Himalayas (ETOPO1: resolution 1.8 km)');
+    hold on; plot_borders(ax0);
+    %save('/home/vipul/dlib/topography/india/etopo1_him','Xlon','Ylat','Zt','nx','ny','d');
     
     % Alaska
     ax0 = [200 235 50 75];
@@ -60,6 +62,30 @@ if 0
     figure; pcolor(Xlon,Ylat,Zt); shading flat;
     xlabel('Longitude'); ylabel('Latitude');
     axis equal, axis(ax0), caxis(cax); colorbar
-    title('India (ETOPO1: resolution 1.8 km)');
-    save('/home/vipul/dlib/topography/alaska/etopo1_ak','Xlon','Ylat','Zt','nx','ny','d');
+    title('Alaska (ETOPO1: resolution 1.8 km)');
+    hold on; plot_borders(ax0);
+    %save('/home/vipul/dlib/topography/alaska/etopo1_ak','Xlon','Ylat','Zt','nx','ny','d');
+    
+    % Central Himalayas
+    ax0 = [75 95 20 35];
+    cax = [0 6000];
+    [Xlon,Ylat,Zt,nx,ny,d] = get_etopo(ax0);
+    figure; pcolor(Xlon,Ylat,Zt); shading flat;
+    xlabel('Longitude'); ylabel('Latitude');
+    axis equal, axis(ax0), caxis(cax); colorbar
+    title('Central Himalayas (ETOPO1: resolution 1.8 km)');
+    hold on; plot_borders(ax0);
+    %save('/home/vipul/dlib/topography/india/etopo1_chim','Xlon','Ylat','Zt','nx','ny','d');
+    
+    % Caucasus
+    ax0 = [35 55 35 50];
+    cax = [0 6000];
+    [Xlon,Ylat,Zt,nx,ny,d] = get_etopo(ax0);
+    figure; pcolor(Xlon,Ylat,Zt); shading flat;
+    xlabel('Longitude'); ylabel('Latitude');
+    axis equal, axis(ax0), caxis(cax); colorbar
+    title('Caucasus (ETOPO1: resolution 1.8 km)');
+    hold on; plot_borders(ax0);
+    %save('/home/vipul/dlib/topography/russia/etopo1_caucasus','Xlon','Ylat','Zt','nx','ny','d');
+    
 end
